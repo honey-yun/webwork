@@ -1,13 +1,17 @@
-FROM openjdk:11-jre-slim
+FROM maven:3.9.9-eclipse-temurin-8 AS builder
+WORKDIR /app
+COPY pom.xml ./
+COPY src ./src
+# 构建 WAR 包，跳过测试以加快构建
+RUN mvn -DskipTests package
 
-# 安装 Tomcat
-RUN apt-get update && apt-get install -y tomcat9
+FROM tomcat:9.0-jdk8-temurin
+ENV TZ=Asia/Shanghai
+WORKDIR /usr/local/tomcat
 
-# 复制 WAR 文件
-COPY target/*.war /var/lib/tomcat9/webapps/ROOT.war
+# 将构建产物部署为 ROOT.war
+COPY --from=builder /app/target/*.war ./webapps/ROOT.war
 
-# 暴露端口
-EXPOSE 8080
+# 在启动时替换端口为 Railway 提供的 PORT
+CMD ["sh", "-c", "sed -ri 's/port=\"8080\"/port=\"'\"'\"${PORT:-8080}'\"'\"/' conf/server.xml && catalina.sh run"]
 
-# 启动命令
-CMD ["catalina.sh", "run"]
