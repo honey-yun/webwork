@@ -1,0 +1,283 @@
+@charset "UTF-8";
+
+/* ========== 后台管理页面布局样式 ========== */
+
+.admin-body {
+    margin: 0;
+    padding: 0;
+    background: #f5f7fa;
+}
+
+/* 顶部导航栏 */
+.admin-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 70px;
+    background: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.admin-nav-container {
+    max-width: 100%;
+    height: 100%;
+    padding: 0 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.admin-logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+.admin-user-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    color: #666;
+}
+
+.admin-logout {
+    color: #dc3545;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.admin-logout:hover {
+    background-color: #f8f9fa;
+}
+
+/* 主容器 */
+.admin-wrapper {
+    display: flex;
+    margin-top: 70px;
+    min-height: calc(100vh - 70px);
+}
+
+/* 左侧导航菜单 */
+.admin-sidebar {
+    width: 260px;
+    background: white;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+    position: fixed;
+    left: 0;
+    top: 70px;
+    height: calc(100vh - 70px);
+    overflow-y: auto;
+    transition: transform 0.3s;
+}
+
+.admin-menu {
+    list-style: none;
+    margin: 0;
+    padding: 20px 0;
+}
+
+.admin-menu-item {
+    margin: 0;
+}
+
+.admin-menu-item a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 15px 25px;
+    color: #666;
+    text-decoration: none;
+    transition: all 0.3s;
+    border-left: 3px solid transparent;
+}
+
+.admin-menu-item a:hover {
+    background-color: #f8f9fa;
+    color: #667eea;
+}
+
+.admin-menu-item.active a {
+    background-color: #f0f4ff;
+    color: #667eea;
+    border-left-color: #667eea;
+    font-weight: 500;
+}
+
+.admin-menu-item svg {
+    flex-shrink: 0;
+}
+
+/* 主内容区 */
+.admin-main {
+    flex: 1;
+    margin-left: 260px;
+    padding: 30px;
+}
+
+.admin-content {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.admin-page-title {
+    font-size: 32px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+/* 仪表盘卡片 */
+.dashboard-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+    margin-bottom: 40px;
+}
+
+.dashboard-card {
+    background: white;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-card-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.dashboard-card-content {
+    flex: 1;
+}
+
+.dashboard-card-value {
+    font-size: 32px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.dashboard-card-label {
+    font-size: 14px;
+    color: #999;
+}
+
+/* 仪表盘区块 */
+.dashboard-section {
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    margin-bottom: 30px;
+}
+
+.dashboard-section-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.quick-actions {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.quick-action-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px 25px;
+    background: #667eea;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.quick-action-btn:hover {
+    background: #764ba2;
+    transform: translateY(-2px);
+}
+
+/* 移动端菜单切换按钮 */
+.admin-sidebar-toggle {
+    display: none;
+    position: fixed;
+    top: 85px;
+    left: 20px;
+    z-index: 1001;
+    background: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    color: #333;
+}
+
+/* 后台管理响应式设计 */
+@media (max-width: 968px) {
+    .admin-sidebar {
+        transform: translateX(-100%);
+    }
+    
+    .admin-sidebar.active {
+        transform: translateX(0);
+    }
+    
+    .admin-main {
+        margin-left: 0;
+    }
+    
+    .admin-sidebar-toggle {
+        display: block;
+    }
+    
+    .dashboard-cards {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .admin-nav-container {
+        padding: 0 15px;
+    }
+    
+    .admin-main {
+        padding: 20px 15px;
+    }
+    
+    .admin-page-title {
+        font-size: 24px;
+    }
+    
+    .quick-actions {
+        flex-direction: column;
+    }
+    
+    .quick-action-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
