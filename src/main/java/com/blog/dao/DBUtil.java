@@ -9,12 +9,15 @@ import java.sql.SQLException;
  */
 public class DBUtil {
     private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
-    // 允许通过环境变量覆盖，便于云端（如 Railway）配置
-    private static final String URL = System.getenv().getOrDefault(
-            "DB_URL",
-            "jdbc:mysql://localhost:3306/blog2_db?useSSL=false&serverTimezone=UTC&characterEncoding=UTF-8");
-    private static final String USERNAME = System.getenv().getOrDefault("DB_USER", "root");
-    private static final String PASSWORD = System.getenv().getOrDefault("DB_PASSWORD", "123456");
+    // 优先读取环境变量，便于云端部署；本地开发可留默认值
+    private static final String HOST = System.getenv().getOrDefault("MYSQL_HOST", "localhost");
+    private static final String PORT = System.getenv().getOrDefault("MYSQL_PORT", "3306");
+    private static final String DB = System.getenv().getOrDefault("MYSQL_DB", "blog2_db");
+    private static final String USERNAME = System.getenv().getOrDefault("MYSQL_USER", "root");
+    private static final String PASSWORD = System.getenv().getOrDefault("MYSQL_PASS", "123456");
+    private static final String URL = String.format(
+            "jdbc:mysql://%s:%s/%s?useSSL=false&serverTimezone=UTC&characterEncoding=UTF-8",
+            HOST, PORT, DB);
 
     static {
         try {
@@ -48,4 +51,3 @@ public class DBUtil {
         }
     }
 }
-
