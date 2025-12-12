@@ -12,6 +12,6 @@ WORKDIR /usr/local/tomcat
 # 将构建产物部署为 ROOT.war
 COPY --from=builder /app/target/*.war ./webapps/ROOT.war
 
-# 在启动时替换端口为 Railway 提供的 PORT
+# 在启动时用平台注入的 PORT 替换 8080（Zeabur/Railway 等）
 CMD ["sh", "-c", "sed -ri 's/port=\"8080\"/port=\"'\"'\"${PORT:-8080}'\"'\"/' conf/server.xml && catalina.sh run"]
 
