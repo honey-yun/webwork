@@ -1,17 +1,8 @@
-FROM maven:3.9.9-eclipse-temurin-8 AS builder
-WORKDIR /app
-COPY pom.xml ./
-COPY src ./src
-# 构建 WAR 包，跳过测试以加快构建
-RUN mvn -DskipTests package
-
-FROM tomcat:9.0-jdk8-temurin
-ENV TZ=Asia/Shanghai
-WORKDIR /usr/local/tomcat
-
-# 将构建产物部署为 ROOT.war
-COPY --from=builder /app/target/*.war ./webapps/ROOT.war
-
-# 在启动时用平台注入的 PORT 替换 8080（Zeabur/Railway 等）
-CMD ["sh", "-c", "sed -ri 's/port=\"8080\"/port=\"'\"'\"${PORT:-8080}'\"'\"/' conf/server.xml && catalina.sh run"]
+FROM tomcat:9-jdk8
+# 清理默认示例，减少体积与冲突
+RUN rm -rf /usr/local/tomcat/webapps/*
+# 将构建产物部署为 ROOT 应用
+COPY target/webwork2.war /usr/local/tomcat/webapps/ROOT.war
+EXPOSE 8080
+CMD ["catalina.sh", "run"]
 
